@@ -1,38 +1,53 @@
 import os
+from typing import List
 
-def find_files(suffix: str, path: str) -> list[str]:
+def find_files(suffix: str, path: str) -> List[str]:
     """
-    Find all files beneath path with file name suffix.
-
-    Note that a path may contain further subdirectories
-    and those subdirectories may also contain further subdirectories.
-
-    There are no limit to the depth of the subdirectories can be.
+    Recursively finds all files under `path` that end with the given `suffix`.
 
     Parameters:
     -----------
     suffix : str
-        The suffix of the files to be found.
+        File name suffix to match (e.g., '.c')
     path : str
-        The root directory path where the search should begin.
+        Starting directory path
 
     Returns:
     --------
-    list[str]
-        A list of file paths that end with the given suffix.
+    List[str]
+        Full paths to matching files
     """
-    pass
+    matching_files = []
 
+    if not os.path.exists(path):
+        return matching_files
+
+    if os.path.isfile(path):
+        if path.endswith(suffix):
+            return [path]
+        else:
+            return []
+
+    # If it's a directory, recurse into it
+    for entry in os.listdir(path):
+        full_path = os.path.join(path, entry)
+        matching_files += find_files(suffix, full_path)
+
+    return matching_files
 
 if __name__ == "__main__":
-    # Test Case 1: Standard test case with known structure
+    # Test Case 1: Provided directory structure
     print("Test Case 1: Standard directory structure")
     result = find_files(".c", "./testdir")
     print(result)
-    # Expected output: ['./testdir/subdir1/a.c', './testdir/subdir3/subsubdir1/b.c', './testdir/subdir5/a.c', './testdir/t1.c']
+    # Expected output (order may vary):
+    # ['./testdir/subdir1/a.c', './testdir/subdir3/subsubdir1/b.c', './testdir/subdir5/a.c', './testdir/t1.c']
 
-    # Test Case 2
-    pass
+    # Test Case 2: Empty directory
+    print("Test Case 2: Empty directory")
+    os.makedirs("emptydir", exist_ok=True)
+    print(find_files(".c", "emptydir"))  # Expected: []
 
-    # Test Case 3
-    pass
+    # Test Case 3: Non-existent path
+    print("Test Case 3: Invalid path")
+    print(find_files(".c", "nonexistent"))  # Expected: []
