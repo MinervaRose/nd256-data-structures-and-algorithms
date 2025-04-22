@@ -19,4 +19,30 @@ Print a message:
 "<telephone number> spent the longest time, <total time> seconds, on the phone during 
 September 2016.".
 """
+# Dictionary to hold phone number -> total time
+call_durations = {}
+
+# Go through each call record
+for call in calls:
+    caller, receiver, _, duration = call
+    duration = int(duration)  # Convert duration to integer
+
+    # Add duration to caller
+    if caller in call_durations:
+        call_durations[caller] += duration
+    else:
+        call_durations[caller] = duration
+
+    # Add duration to receiver
+    if receiver in call_durations:
+        call_durations[receiver] += duration
+    else:
+        call_durations[receiver] = duration
+
+# Find the number with the longest time
+max_number = max(call_durations, key=call_durations.get)
+max_time = call_durations[max_number]
+
+# Print the result
+print(f"{max_number} spent the longest time, {max_time} seconds, on the phone during September 2016.")
 
