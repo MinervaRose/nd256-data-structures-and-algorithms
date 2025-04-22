@@ -106,51 +106,47 @@ class LinkedList:
 
 
 def union(llist_1: LinkedList, llist_2: LinkedList) -> LinkedList:
-    """
-    Compute the union of two linked lists.
+    result = LinkedList()
+    seen = set()
 
-    Parameters:
-    -----------
-    llist_1 : LinkedList
-        The first linked list.
-    llist_2 : LinkedList
-        The second linked list.
+    current = llist_1.head
+    while current:
+        seen.add(current.value)
+        current = current.next
 
-    Returns:
-    --------
-    LinkedList
-        A new linked list containing all unique elements from both input linked lists.
-    """
-    # Use a set to store all unique elements
-    pass
+    current = llist_2.head
+    while current:
+        seen.add(current.value)
+        current = current.next
 
-    # Create a new linked list to store the union
-    pass
+    for value in seen:
+        result.append(value)
+
+    return result
+
 
 def intersection(llist_1: LinkedList, llist_2: LinkedList) -> LinkedList:
-    """
-    Compute the intersection of two linked lists.
+    result = LinkedList()
+    set1 = set()
+    set2 = set()
 
-    Parameters:
-    -----------
-    llist_1 : LinkedList
-        The first linked list.
-    llist_2 : LinkedList
-        The second linked list.
+    current = llist_1.head
+    while current:
+        set1.add(current.value)
+        current = current.next
 
-    Returns:
-    --------
-    LinkedList
-        A new linked list containing all elements that are present in both input linked lists.
-    """
-    # Use sets to find the intersection
-    pass
+    current = llist_2.head
+    while current:
+        set2.add(current.value)
+        current = current.next
 
-    # Find the intersection of both sets
-    pass
+    common = set1.intersection(set2)
 
-    # Create a new linked list to store the intersection
-    pass
+    for value in common:
+        result.append(value)
+
+    return result
+
 
 if __name__ == "__main__":
     ## Test case 1
@@ -188,7 +184,22 @@ if __name__ == "__main__":
     print("Intersection:", intersection(linked_list_3, linked_list_4)) # Expected: empty
 
     ## Test case 3
-    pass
+    print("\nTest Case 3: One list is empty")
+    linked_list_5 = LinkedList()
+    linked_list_6 = LinkedList()
+
+    for i in [1, 2, 3]:
+        linked_list_5.append(i)
+
+    # linked_list_6 is empty
+
+    print("Union:", union(linked_list_5, linked_list_6))         # Expected: 1, 2, 3
+    print("Intersection:", intersection(linked_list_5, linked_list_6)) # Expected: empty
 
     ## Test case 4
-    pass
+    print("\nTest Case 4: Both lists are empty")
+    linked_list_7 = LinkedList()
+    linked_list_8 = LinkedList()
+
+    print("Union:", union(linked_list_7, linked_list_8))         # Expected: empty
+    print("Intersection:", intersection(linked_list_7, linked_list_8)) # Expected: empty
