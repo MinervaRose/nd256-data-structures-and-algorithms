@@ -65,11 +65,23 @@ def huffman_decoding(encoded_data: str, tree: Optional[HuffmanNode]) -> str:
     if not encoded_data or tree is None:
         return ""
 
+    # Special case: single-node tree (only one unique character)
+    if tree.left is None and tree.right is None:
+        return tree.char * len(encoded_data)
+
     decoded = []
     node = tree
 
     for bit in encoded_data:
-        node = node.left if bit == '0' else node.right
+        if bit == '0':
+            node = node.left
+        else:
+            node = node.right
+
+        if node is None:
+            # Defensive programming: should never happen with correct encoding
+            break
+
         if node.char is not None:
             decoded.append(node.char)
             node = tree
