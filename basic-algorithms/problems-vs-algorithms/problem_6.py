@@ -15,30 +15,40 @@ from typing import Optional
 
 def get_min_max(ints: list[int]) -> Optional[tuple[int, int]]:
     """
-    Return a tuple(min, max) out of list of unsorted integers.
+    Return a tuple (min, max) from an unsorted list of integers.
     
     Args:
-    ints (list[int]): list of integers containing one or more integers
+    ints (list[int]): A list of integers (can be empty)
 
     Returns:
-    Optional[tuple[int, int]]: A tuple containing the minimum and maximum 
-    integer, or None if the list is empty
+    Optional[tuple[int, int]]: Tuple of (min, max) or None if the list is empty
     """
-    pass
+    if not ints:
+        return None
 
+    min_val = max_val = ints[0]
+
+    for num in ints[1:]:
+        if num < min_val:
+            min_val = num
+        elif num > max_val:
+            max_val = num
+
+    return (min_val, max_val)
+
+# Test cases
 if __name__ == '__main__':
     # Edge case: Empty input list
-    print(get_min_max([]))
-    # Expected output: None
+    print(get_min_max([]))  # Expected output: None
 
     # Normal case: list with negative and positive numbers
-    print(get_min_max([-10, 0, 10, -20, 20]))
-    # Expected output: (-20, 20)
+    print(get_min_max([-10, 0, 10, -20, 20]))  # Expected output: (-20, 20)
 
     # Normal case: list with large range of numbers
-    print(get_min_max([1000, -1000, 500, -500, 0]))
-    # Expected output: (-1000, 1000)
+    print(get_min_max([1000, -1000, 500, -500, 0]))  # Expected output: (-1000, 1000)
 
     # Normal case: list with already sorted numbers
-    print(get_min_max([1, 2, 3, 4, 5]))
-    # Expected output: (1, 5)
+    print(get_min_max([1, 2, 3, 4, 5]))  # Expected output: (1, 5)
+
+    # Edge case: single element list
+    print(get_min_max([7]))  # Expected output: (7, 7)
