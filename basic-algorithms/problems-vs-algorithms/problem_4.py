@@ -1,5 +1,5 @@
 """
-Problem 3: Rearrange Array Elements
+Problem 4: Rearrange Array Elements
 
 Given an input array consisting on only 0, 1, and 2, sort the array in a single 
 traversal. You're not allowed to use any sorting function that Python provides.
@@ -16,17 +16,31 @@ works correctly.
 
 def sort_012(input_list: list[int]) -> list[int]:
     """
-    Sort an array consisting only of 0s, 1s, and 2s in a single traversal.
-
-    This function uses the Dutch National Flag algorithm to sort the array in-place.
+    Sorts an array consisting only of 0s, 1s, and 2s using the Dutch National Flag algorithm.
+    Performs sorting in a single traversal (O(n), single-pass).
 
     Args:
-    input_list (list[int]): A list of integers where each integer is either 0, 1, or 2.
+        input_list (list[int]): The list containing only 0s, 1s, and 2s.
 
     Returns:
-    list[int]: The sorted list with all 0s, followed by all 1s, and then all 2s.
+        list[int]: The sorted list.
     """
-    pass
+    low = 0
+    mid = 0
+    high = len(input_list) - 1
+
+    while mid <= high:
+        if input_list[mid] == 0:
+            input_list[low], input_list[mid] = input_list[mid], input_list[low]
+            low += 1
+            mid += 1
+        elif input_list[mid] == 1:
+            mid += 1
+        else:  # input_list[mid] == 2
+            input_list[mid], input_list[high] = input_list[high], input_list[mid]
+            high -= 1
+
+    return input_list
 
 def test_function(test_case: list[list[int]]) -> None:
     """
