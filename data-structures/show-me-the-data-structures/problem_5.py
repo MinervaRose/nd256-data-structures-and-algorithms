@@ -66,56 +66,25 @@ class Block:
                 f")\n")
 
 class Blockchain:
-    """
-    A class to represent a blockchain.
-
-    Attributes:
-    -----------
-    chain : list[Block]
-        The list of blocks in the blockchain.
-    """
-
     def __init__(self) -> None:
-        """
-        Constructs all the necessary attributes for the Blockchain object.
-        """
-        pass
+        self.chain: list[Block] = []
+        self.create_genesis_block()
 
     def create_genesis_block(self) -> None:
-        """
-        Create the genesis block (the first block in the blockchain).
-        """
-        # Genesis block has no previous hash and empty data
-        pass
+        # Create the first block with default values
+        genesis_block = Block(datetime.datetime.utcnow(), "Genesis Block", "0")
+        self.chain.append(genesis_block)
 
     def add_block(self, data: str) -> None:
-        """
-        Add a new block to the blockchain.
-
-        Parameters:
-        -----------
-        data : str
-            The data to be stored in the new block.
-        """
-        pass
+        # The new block's previous_hash should be the last block's hash
+        last_block = self.chain[-1]
+        new_block = Block(datetime.datetime.utcnow(), data, last_block.hash)
+        self.chain.append(new_block)
 
     def __repr__(self) -> str:
-        """
-        Return a string representation of the blockchain.
-
-        Returns:
-        --------
-        str
-            A string representation of the blockchain.
-        """
-        chain_str = ""
-        for block in self.chain:
-            chain_str += str(block) + "\n"
-        return chain_str
+        return '\n'.join(str(block) for block in self.chain)
 
 if __name__ == "__main__":
-    # Test cases
-    # Test Case 1: Create a blockchain and add blocks
     print("Test Case 1: Basic blockchain functionality")
     blockchain = Blockchain()
     blockchain.add_block("Block 1 Data")
@@ -123,8 +92,15 @@ if __name__ == "__main__":
     blockchain.add_block("Block 3 Data")
     print(blockchain)
 
-    # Test Case 2
-    pass
+    print("\nTest Case 2: Edge case with empty data")
+    blockchain2 = Blockchain()
+    blockchain2.add_block("")
+    blockchain2.add_block("Final Block")
+    print(blockchain2)
 
-    # Test Case 3
-    pass
+    print("\nTest Case 3: Very large data block")
+    large_data = "A" * 1000000  # 1 million characters
+    blockchain3 = Blockchain()
+    blockchain3.add_block(large_data)
+    print(f"First block in large blockchain:\n{blockchain3.chain[0]}")
+    print(f"Second block (large data):\n{blockchain3.chain[1]}")
