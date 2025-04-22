@@ -40,7 +40,8 @@ def generate_huffman_codes(node: Optional[HuffmanNode], code: str, huffman_codes
     if node is None:
         return
     if node.char is not None:
-        huffman_codes[node.char] = code
+        # Handle special case where code is empty (only one unique character)
+        huffman_codes[node.char] = code if code != "" else "0"
         return
     generate_huffman_codes(node.left, code + "0", huffman_codes)
     generate_huffman_codes(node.right, code + "1", huffman_codes)
