@@ -1,68 +1,44 @@
+## Problem 3: Huffman Coding – Explanation (Updated)
 
-## Reasoning Behind Decisions:
+### **Reasoning Behind Decisions:**
 
-To implement Huffman coding efficiently, I used a min-heap (priority queue) to build the Huffman Tree. This is the standard and optimal approach for constructing a tree based on character frequencies:
+I implemented Huffman encoding using a min-heap (priority queue) to build the binary Huffman tree, based on character frequency. More frequent characters get shorter codes, while rarer characters get longer codes.
 
-* Each node contains a character and its frequency.
+- I used a custom `HuffmanNode` class and Python’s built-in `heapq` module.
+- To generate codes, I performed a depth-first traversal of the tree.
+- For encoding, I mapped each character in the input string to its binary code.
+- For decoding, I traversed the Huffman tree according to the bitstream.
 
-* The two nodes with the lowest frequencies are repeatedly merged into a parent node.
+#### Special case:
+If the input string contains only one unique character (e.g., `"aaaaaa"`), we ensure that it is still encoded using a default code (e.g., `"0"`). During decoding, we simply repeat the character for the length of the encoded bitstring. This case required explicit handling to avoid tree traversal errors and ensure correctness.
 
-* This ensures that frequently used characters get shorter binary codes, and rare characters get longer codes.
 
-I chose a recursive depth-first traversal to generate binary codes by assigning:
 
-* '0' for left edges
+### **Time Efficiency:**
 
-* '1' for right edges
+Let `n` be the number of unique characters, and `L` the length of the input string:
 
-For decoding, I simply traverse the tree bit by bit until I reach a leaf node, collecting the corresponding character.
+- **Frequency calculation:** O(L)
+- **Heap construction:** O(n)
+- **Building the Huffman Tree:** O(n log n)
+- **Code generation (DFS traversal):** O(n)
+- **Encoding the string:** O(L)
+- **Decoding the string:** O(L)
 
-The solution cleanly separates concerns:
+ **Total time complexity**:
+- **Encoding:** O(L + n log n)
+- **Decoding:** O(L)
 
-* Frequency calculation
 
-* Tree construction
 
-* Code generation
+### **Space Efficiency:**
 
-* Encoding and decoding logic
+- **Frequency dictionary:** O(n)
+- **Heap / Tree structure:** O(n)
+- **Huffman code map:** O(n)
+- **Encoded data and decoded result:** O(L)
 
-This modular approach improves clarity, maintainability, and testability.
+ **Total space complexity:** O(n + L)
 
-## Time Efficiency:
+This is optimal for a lossless compression algorithm and ensures linear scalability with the input.
 
-Let n be the number of unique characters, and L be the length of the input string.
-
-* Frequency calculation: O(L) — we scan the entire string once.
-
-* Building the heap: O(n) to heapify the initial list of nodes.
-
-* Huffman Tree construction: O(n log n) — each of the n-1 merges involves heap operations.
-
-* Code generation (DFS): O(n) — we visit every node in the tree once.
-
-* Encoding the string: O(L) — we loop over the string and replace each char with its code.
-
-* Decoding the string: O(L) — each bit leads us through the tree to a leaf.
-
-Total time complexity:
-
-* Encoding: O(L + n log n)
-
-* Decoding: O(L)
-
-## Space Efficiency:
-
-* Frequency dictionary: O(n)
-
-* Heap and Huffman tree: O(n)
-
-* Code map (dictionary of binary codes): O(n)
-
-* Encoded string: O(L)
-
-* Decoded string: O(L)
-
-Total space complexity: O(n + L)
-
-This is optimal for a lossless compression algorithm — we store only what’s necessary to encode and decode the input.
