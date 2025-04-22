@@ -13,7 +13,7 @@ These behaviors align perfectly with the characteristics of an LRU cache, and Or
 
 ## Time Efficiency:
 
-*get() → O(1) average time
+* get() → O(1) average time
 (move_to_end() and key lookup are constant time)
 
 * set() → O(1) average time
