@@ -15,41 +15,42 @@ Additionally, I included a Router class as an abstraction layer. This class mana
 ### Time Complexity
 
 * Insertion (add_handler):
-    Each path is split into k segments and inserted one-by-one into the Trie.
 
-        Time: O(k), where k is the number of parts in the path.
+Each path is split into k segments and inserted one-by-one into the Trie.
+
+Time: O(k), where k is the number of parts in the path.
 
 * Lookup (lookup):
     Follows the same process as insertion—traverse each segment of the path to find the handler.
 
-        Time: O(k)
+Time: O(k)
 
 Both operations are linear in the number of segments in the path, which is efficient given that URL depth is typically shallow in real-world applications.
 
 ### Space Complexity
 
-    The Trie stores nodes for every unique segment across all routes.
+The Trie stores nodes for every unique segment across all routes.
 
-        In the worst case (every route has unique segments), space is O(n × k), where:
+In the worst case (every route has unique segments), space is O(n × k), where:
 
 * n is the number of routes
 
 * k is the average number of parts per route
 
-    Each node may also store a handler (only for complete paths), so overall memory usage is reasonable and scalable.
+Each node may also store a handler (only for complete paths), so overall memory usage is reasonable and scalable.
 
 ## Final Thoughts
 
 This solution mimics real-world HTTP routers while maintaining clean separation of concerns:
 
-    The RouteTrie handles structure and storage.
+The RouteTrie handles structure and storage.
 
-    The Router manages interaction and interface-level logic.
+The Router manages interaction and interface-level logic.
 
 It also ensures:
 
-    Robust handling of edge cases (e.g., root path, trailing slashes)
+Robust handling of edge cases (e.g., root path, trailing slashes)
 
-    Efficient matching performance for dynamic or nested paths
+Efficient matching performance for dynamic or nested paths
 
 Using a Trie for URL routing provides clarity, performance, and maintainability—making it a practical solution for web infrastructure.
