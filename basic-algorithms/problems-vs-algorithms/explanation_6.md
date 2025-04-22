@@ -1,13 +1,31 @@
-<!--
-Problem 6: Unsorted Integer Array
+### Reasoning Behind Decisions:
 
-Provide an explanation for your answer, clearly organizing your thoughts into
-concise and easy-to-understand language.
+The goal was to find the minimum and maximum values in an unsorted list in linear time, without using Python’s built-in `min()` or `max()` functions. 
 
-Focus on explaining the reasoning behind your decisions rather than giving a 
-detailed description of the code. For instance, why did you choose a particular 
-data structure? Additionally, discuss the efficiency of your solution in terms 
-of time and space complexity. If necessary, you can support your explanation 
-with code snippets or mathematical formulas. For guidance on how to write 
-formulas in markdown, refer to https://docs.github.com/en/get-started/writing-on-github/working-with-advanced-formatting/writing-mathematical-expressions.
--->
+To solve this, I used a simple linear scan of the list, initializing both `min_val` and `max_val` to the first element. I then traversed the rest of the list once, updating `min_val` and `max_val` whenever a smaller or larger number was encountered, respectively.
+
+This approach is memory-efficient, uses no extra data structures, and handles edge cases like an empty list or a single-element list gracefully.
+
+
+
+### Time Efficiency:
+
+Let **n** be the number of elements in the list.
+
+- Initializing min and max: **O(1)**
+- Single traversal of the list: **O(n)**
+
+**Total Time Complexity:**  
+$$O(n)$$
+
+This is optimal since each element must be checked at least once to determine the global minimum and maximum.
+
+
+
+### Space Efficiency:
+
+- We only store two extra variables (`min_val`, `max_val`) regardless of input size.
+- No additional data structures are used.
+
+**Total Space Complexity:**  
+$$O(1)$$
