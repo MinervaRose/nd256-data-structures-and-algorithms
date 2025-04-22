@@ -15,17 +15,31 @@ your algorithm works correctly.
 """
 
 def rotated_array_search(input_list: list[int], number: int) -> int:
-    """
-    Find the index by searching in a rotated sorted array
+    if not input_list:
+        return -1
 
-    Args:
-    input_list (list[int]): Input array to search
-    number (int): Target number to find
+    left = 0
+    right = len(input_list) - 1
 
-    Returns:
-    int: Index of the target number or -1 if not found
-    """
-    pass
+    while left <= right:
+        mid = (left + right) // 2
+        if input_list[mid] == number:
+            return mid
+
+        # Determine which side is sorted
+        if input_list[left] <= input_list[mid]:  # Left side is sorted
+            if input_list[left] <= number < input_list[mid]:
+                right = mid - 1
+            else:
+                left = mid + 1
+        else:  # Right side is sorted
+            if input_list[mid] < number <= input_list[right]:
+                left = mid + 1
+            else:
+                right = mid - 1
+
+    return -1
+
 
 # Test function using provided test cases
 def test_function(test_case: list[list[int], int]) -> None:
